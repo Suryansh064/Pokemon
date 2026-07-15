@@ -5,7 +5,9 @@ export const ThemeToggle = () => {
     try {
       const saved = localStorage.getItem('theme')
       if (saved) return saved
-    } catch (e) {}
+    } catch {
+      /* localStorage can be unavailable in some browser modes. */
+    }
     return window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark'
   })
 
@@ -14,7 +16,9 @@ export const ThemeToggle = () => {
     document.documentElement.classList.add(theme)
     try {
       localStorage.setItem('theme', theme)
-    } catch (e) {}
+    } catch {
+      /* localStorage can be unavailable in some browser modes. */
+    }
   }, [theme])
 
   const toggle = () => setTheme((t) => (t === 'dark' ? 'light' : 'dark'))
